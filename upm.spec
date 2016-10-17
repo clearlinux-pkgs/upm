@@ -4,7 +4,7 @@
 #
 Name     : upm
 Version  : 0.8.0
-Release  : 1
+Release  : 2
 URL      : https://github.com/intel-iot-devkit/upm/archive/v0.8.0.tar.gz
 Source0  : https://github.com/intel-iot-devkit/upm/archive/v0.8.0.tar.gz
 Summary  : No detailed summary available
@@ -58,6 +58,13 @@ python components for the upm package.
 export LANG=C
 mkdir clr-build
 pushd clr-build
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -flto -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -flto -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -flto -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -flto -fno-semantic-interposition "
 cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=%{_libdir} -DCMAKE_AR=/usr/bin/gcc-ar -DCMAKE_RANLIB=/usr/bin/gcc-ranlib
 make VERBOSE=1  %{?_smp_mflags}
 popd
