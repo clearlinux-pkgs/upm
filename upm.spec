@@ -4,7 +4,7 @@
 #
 Name     : upm
 Version  : 0.8.0
-Release  : 5
+Release  : 6
 URL      : https://github.com/intel-iot-devkit/upm/archive/v0.8.0.tar.gz
 Source0  : https://github.com/intel-iot-devkit/upm/archive/v0.8.0.tar.gz
 Summary  : No detailed summary available
