@@ -4,7 +4,7 @@
 #
 Name     : upm
 Version  : 1.7.1
-Release  : 9
+Release  : 10
 URL      : https://github.com/intel-iot-devkit/upm/archive/v1.7.1.tar.gz
 Source0  : https://github.com/intel-iot-devkit/upm/archive/v1.7.1.tar.gz
 Summary  : No detailed summary available
@@ -18,10 +18,11 @@ BuildRequires : buildreq-cmake
 BuildRequires : git
 BuildRequires : googletest-dev
 BuildRequires : libjpeg-turbo-dev
+BuildRequires : libuv-dev
 BuildRequires : mraa-dev
 BuildRequires : nodejs
 BuildRequires : nodejs-dev
-BuildRequires : openjdk9
+BuildRequires : openjdk11
 BuildRequires : pkgconfig(mraa)
 BuildRequires : python3
 BuildRequires : python3-dev
@@ -46,6 +47,7 @@ Group: Development
 Requires: upm-lib = %{version}-%{release}
 Requires: upm-data = %{version}-%{release}
 Provides: upm-devel = %{version}-%{release}
+Requires: upm = %{version}-%{release}
 
 %description dev
 dev components for the upm package.
@@ -84,17 +86,22 @@ python components for the upm package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1541027967
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1564007984
 mkdir -p clr-build
 pushd clr-build
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake .. -DWERROR=OFF \
 -DPYTHON2LIBS_FOUND=FALSE
 make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1541027967
+export SOURCE_DATE_EPOCH=1564007984
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/upm
 cp LICENSE %{buildroot}/usr/share/package-licenses/upm/LICENSE
