@@ -4,7 +4,7 @@
 #
 Name     : upm
 Version  : 1.7.1
-Release  : 10
+Release  : 11
 URL      : https://github.com/intel-iot-devkit/upm/archive/v1.7.1.tar.gz
 Source0  : https://github.com/intel-iot-devkit/upm/archive/v1.7.1.tar.gz
 Summary  : No detailed summary available
@@ -22,11 +22,11 @@ BuildRequires : libuv-dev
 BuildRequires : mraa-dev
 BuildRequires : nodejs
 BuildRequires : nodejs-dev
-BuildRequires : openjdk11
 BuildRequires : pkgconfig(mraa)
 BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : swig
+BuildRequires : util-linux
 
 %description
 <p align="center">
@@ -87,7 +87,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1564007984
+export SOURCE_DATE_EPOCH=1571683623
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -97,25 +97,25 @@ export FFLAGS="$CFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake .. -DWERROR=OFF \
 -DPYTHON2LIBS_FOUND=FALSE
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1564007984
+export SOURCE_DATE_EPOCH=1571683623
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/upm
-cp LICENSE %{buildroot}/usr/share/package-licenses/upm/LICENSE
-cp cmake/modules/LICENSE_1_0.txt %{buildroot}/usr/share/package-licenses/upm/cmake_modules_LICENSE_1_0.txt
-cp doxy/node/generators/yuidoc/tmpl/LICENSE %{buildroot}/usr/share/package-licenses/upm/doxy_node_generators_yuidoc_tmpl_LICENSE
-cp src/bmi160/license.txt %{buildroot}/usr/share/package-licenses/upm/src_bmi160_license.txt
-cp src/bmm150/license.txt %{buildroot}/usr/share/package-licenses/upm/src_bmm150_license.txt
-cp src/ili9341/license.txt %{buildroot}/usr/share/package-licenses/upm/src_ili9341_license.txt
-cp src/lcd/license.txt %{buildroot}/usr/share/package-licenses/upm/src_lcd_license.txt
-cp src/mcp2515/license.txt %{buildroot}/usr/share/package-licenses/upm/src_mcp2515_license.txt
-cp src/pn532/license.txt %{buildroot}/usr/share/package-licenses/upm/src_pn532_license.txt
-cp src/ssd1351/license.txt %{buildroot}/usr/share/package-licenses/upm/src_ssd1351_license.txt
-cp src/st7735/license.txt %{buildroot}/usr/share/package-licenses/upm/src_st7735_license.txt
-cp src/sx1276/LICENSE.txt %{buildroot}/usr/share/package-licenses/upm/src_sx1276_LICENSE.txt
+cp %{_builddir}/upm-1.7.1/LICENSE %{buildroot}/usr/share/package-licenses/upm/be915859adbd72f0eed0e3e50e2daf6fd2db5bde
+cp %{_builddir}/upm-1.7.1/cmake/modules/LICENSE_1_0.txt %{buildroot}/usr/share/package-licenses/upm/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90
+cp %{_builddir}/upm-1.7.1/doxy/node/generators/yuidoc/tmpl/LICENSE %{buildroot}/usr/share/package-licenses/upm/d5902ab044aa0bdde4696ca63b39b91754fb8ae0
+cp %{_builddir}/upm-1.7.1/src/bmi160/license.txt %{buildroot}/usr/share/package-licenses/upm/66907954083a8801f64c7f022aa1f13d84326237
+cp %{_builddir}/upm-1.7.1/src/bmm150/license.txt %{buildroot}/usr/share/package-licenses/upm/61197662074af6718e35beea3ff9d7646f5b0d12
+cp %{_builddir}/upm-1.7.1/src/ili9341/license.txt %{buildroot}/usr/share/package-licenses/upm/2576bd083b2485b106c011a3fc2157311d8d4011
+cp %{_builddir}/upm-1.7.1/src/lcd/license.txt %{buildroot}/usr/share/package-licenses/upm/2576bd083b2485b106c011a3fc2157311d8d4011
+cp %{_builddir}/upm-1.7.1/src/mcp2515/license.txt %{buildroot}/usr/share/package-licenses/upm/c09bbef42f70fdec0999ad55b757781fa9f4f4c9
+cp %{_builddir}/upm-1.7.1/src/pn532/license.txt %{buildroot}/usr/share/package-licenses/upm/cb056039b6b76a1fdabe0fc96e5a9167cf088d82
+cp %{_builddir}/upm-1.7.1/src/ssd1351/license.txt %{buildroot}/usr/share/package-licenses/upm/2576bd083b2485b106c011a3fc2157311d8d4011
+cp %{_builddir}/upm-1.7.1/src/st7735/license.txt %{buildroot}/usr/share/package-licenses/upm/2576bd083b2485b106c011a3fc2157311d8d4011
+cp %{_builddir}/upm-1.7.1/src/sx1276/LICENSE.txt %{buildroot}/usr/share/package-licenses/upm/a5aae2c3fe5d751a95644e91c1f959d1570ad24e
 pushd clr-build
 %make_install
 popd
@@ -2473,18 +2473,15 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/upm/LICENSE
-/usr/share/package-licenses/upm/cmake_modules_LICENSE_1_0.txt
-/usr/share/package-licenses/upm/doxy_node_generators_yuidoc_tmpl_LICENSE
-/usr/share/package-licenses/upm/src_bmi160_license.txt
-/usr/share/package-licenses/upm/src_bmm150_license.txt
-/usr/share/package-licenses/upm/src_ili9341_license.txt
-/usr/share/package-licenses/upm/src_lcd_license.txt
-/usr/share/package-licenses/upm/src_mcp2515_license.txt
-/usr/share/package-licenses/upm/src_pn532_license.txt
-/usr/share/package-licenses/upm/src_ssd1351_license.txt
-/usr/share/package-licenses/upm/src_st7735_license.txt
-/usr/share/package-licenses/upm/src_sx1276_LICENSE.txt
+/usr/share/package-licenses/upm/2576bd083b2485b106c011a3fc2157311d8d4011
+/usr/share/package-licenses/upm/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90
+/usr/share/package-licenses/upm/61197662074af6718e35beea3ff9d7646f5b0d12
+/usr/share/package-licenses/upm/66907954083a8801f64c7f022aa1f13d84326237
+/usr/share/package-licenses/upm/a5aae2c3fe5d751a95644e91c1f959d1570ad24e
+/usr/share/package-licenses/upm/be915859adbd72f0eed0e3e50e2daf6fd2db5bde
+/usr/share/package-licenses/upm/c09bbef42f70fdec0999ad55b757781fa9f4f4c9
+/usr/share/package-licenses/upm/cb056039b6b76a1fdabe0fc96e5a9167cf088d82
+/usr/share/package-licenses/upm/d5902ab044aa0bdde4696ca63b39b91754fb8ae0
 
 %files python
 %defattr(-,root,root,-)
